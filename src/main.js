@@ -1,7 +1,7 @@
-window.evalMT = function(typ, data) {
+window.evalMT = function(typ, outputTarget, data) {
   try {
     const form = document.createElement('form');
-    form.setAttribute('action', 'macro://lib_eval@TOKEN/all/Impersonated?');
+    form.setAttribute('action', `macro://lib_eval@TOKEN/${outputTarget}/Impersonated?`);
     form.setAttribute('method', 'json');
     form.setAttribute('style', 'display:none');
     const r = document.createElement('input');
@@ -26,7 +26,7 @@ window.data = data;
 // write data back to notes
 window.setData = function(data) {
   const dataStr = JSON.stringify(data);
-  window.evalMT('h', `setNotes(base64.decode("${window.btoa(dataStr)}"))`);
+  window.evalMT('h', 'non', `setNotes(base64.decode("${window.btoa(dataStr)}"))`);
 }
 
 import Vue from "vue";

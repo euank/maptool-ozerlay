@@ -12,7 +12,7 @@ export default {
       return Math.floor((val - 10) / 2.0);
     },
     runSave() {
-      window.evalMT('t', `1d20 + ${this.mod(this.value)}`);
+      window.evalMT('t', 'all', `1d20 + ${this.mod(this.value)}`);
     },
   }
 }

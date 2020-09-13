@@ -43,8 +43,8 @@ if (notesHtml === undefined) {
   console.error('notes should not be undefined');
   throw new Error('FATAL');
 }
-const notes = JSON.parse(notesHtml);
 
+const notes = JSON.parse(notesHtml);
 const Oz = new Character(notes);
 
 // write data back to notes

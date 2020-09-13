@@ -57,13 +57,30 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-import App from "./App.vue";
+import App from "./App";
+import * as routes from './routes'
 
 const store = new Vuex.Store({
   state: {
     Oz,
+    routeHistory: [] as routes.Route[],
+    currentRoute: routes.Home,
   },
   mutations: {
+    routeBackTo(state, id: number) {
+      for (let i = state.routeHistory.length - 1; i >= 0; i--) {
+        if (state.routeHistory[i].id == id) {
+          state.currentRoute = state.routeHistory[i]
+          state.routeHistory = state.routeHistory.slice(0, i)
+          return
+        }
+        throw new Error(`id ${id} not found in the history stack; this is a bug`)
+      }
+    },
+    routeTo(state, entry: routes.Route) {
+      state.routeHistory.push(state.currentRoute)
+      state.currentRoute = entry
+    },
   },
 });
 

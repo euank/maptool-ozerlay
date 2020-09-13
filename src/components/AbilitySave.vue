@@ -10,7 +10,7 @@
 
 <template>
   <div>
-    <a class="button button-outline" v-on:click="runSave()" href="#">
+    <a class="button button-outline" @click="runSave()" href="#">
       {{ this.ability }} (+ {{ this.mod() }})
     </a>
   </div>

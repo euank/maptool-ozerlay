@@ -1,12 +1,14 @@
 import { Character} from './lib/dnd'
-const isWeb = typeof (window as any).MapTool === 'undefined';
 
 declare global {
     interface Window { 
       evalMT(typ: string, target: string, data: string): void
       setData(data: string): void
+      isWeb: boolean
     }
 }
+const isWeb = typeof (window as any).MapTool === 'undefined';
+window.isWeb = isWeb;
 
 
 window.evalMT = function(typ: string, outputTarget: string, data: string) {
@@ -39,6 +41,9 @@ let notesHtml
 if (notesEl !== null) {
   notesHtml = notesEl.innerHTML;
 }
+if (isWeb) {
+  notesHtml = localStorage.getItem('notes') || '{}';
+}
 if (notesHtml === undefined) {
   console.error('notes should not be undefined');
   throw new Error('FATAL');
@@ -48,9 +53,11 @@ const notes = JSON.parse(notesHtml);
 const Oz = new Character(notes);
 
 // write data back to notes
-window.setData = function(data) {
-  const dataStr = JSON.stringify(data);
-  window.evalMT('h', 'non', `setNotes(base64.decode("${window.btoa(dataStr)}"))`);
+window.setData = function(data: string) {
+  window.evalMT('h', 'non', `setNotes(base64.decode("${window.btoa(data)}"))`);
+  if (isWeb) {
+    localStorage.setItem('notes', data);
+  }
 }
 
 import Vue from "vue";

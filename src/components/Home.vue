@@ -1,5 +1,11 @@
 <style>
 @import '~milligram/dist/milligram.min.css';
+
+.flexcontainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 </style>
 
 <template>
@@ -25,6 +31,13 @@
       <div class="container row">
         <div v-for="ability in Object.keys(Oz.data.abilityScores)">
           <AbilitySave :ability=ability />
+        </div>
+      </div>
+      <br />
+      <h4>Skill Checks</h4>
+      <div class="flexcontainer">
+        <div v-for="skill in Object.keys(Oz.data.skills)">
+          <SkillCheck class="skill" :skill="skill" />
         </div>
       </div>
     </div>

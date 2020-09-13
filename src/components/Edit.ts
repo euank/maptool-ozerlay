@@ -12,6 +12,7 @@ export default Vue.extend({
     save() {
       const Oz = new Character(this.char)
       this.$store.commit('updateOz', Oz);
+      Oz.save()
     },
   },
 });

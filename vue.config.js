@@ -5,12 +5,18 @@ module.exports = {
     },
     entry: {
       app: './src/main.ts',
-      styles: [
+      /*styles: [
         './node_modules/milligram/dist/milligram.min.css',
-      ],
+      ],*/
     },
   },
   css: {
     extract: false,
+    requireModuleExtension: false,
+    loaderOptions: {
+      postcss: {
+        execute: true,
+      },
+    },
   },
 }

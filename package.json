@@ -17,6 +17,7 @@
     "css-loader": "^4.3.0",
     "milligram": "^1.4.1",
     "serve": "^11.3.2",
+    "style-loader": "^1.2.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",

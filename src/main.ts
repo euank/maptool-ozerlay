@@ -81,6 +81,9 @@ const store = new Vuex.Store({
       state.routeHistory.push(state.currentRoute)
       state.currentRoute = entry
     },
+    updateOz(state, oz: Character) {
+      state.Oz = oz
+    }
   },
 });
 

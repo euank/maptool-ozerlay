@@ -18,7 +18,6 @@
       <ul>
         <li v-for="statusEffect in Oz.data.statusEffects">{{ statusEffect }}</li>
       </ul>
-      <a href="#">Add status effect</a>
 
       <br />
       <br />

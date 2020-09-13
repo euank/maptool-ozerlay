@@ -5,10 +5,17 @@ module.exports = {
     },
     entry: {
       app: './src/main.ts',
-      /*styles: [
-        './node_modules/milligram/dist/milligram.min.css',
-      ],*/
     },
+  },
+  chainWebpack: config => {
+    const images = config.module.rule('images');
+    images.clear();
+    images
+      .test(/\.(png|jpg)$/)
+      .use('url-loader')
+      .loader('url-loader')
+      .options({limit: 9e9999, esModule: false});
+
   },
   css: {
     extract: false,

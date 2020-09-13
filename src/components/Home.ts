@@ -5,7 +5,7 @@ import AbilitySave from "@/components/AbilitySave.vue";
 import SkillCheck from "@/components/SkillCheck.vue";
 import FrameReload from "@/components/FrameReload.vue";
 
-import { Edit } from '@/routes'
+import { Edit, Combat } from '@/routes'
 
 export default Vue.extend({
   computed: {
@@ -22,6 +22,9 @@ export default Vue.extend({
   methods: {
     navEdit() {
       this.$store.commit('routeTo', Edit)
+    },
+    navCombat() {
+      this.$store.commit('routeTo', Combat)
     },
   },
 })

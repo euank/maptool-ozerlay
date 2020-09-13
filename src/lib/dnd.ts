@@ -36,6 +36,14 @@ export class Character {
     return Math.floor((val - 10) / 2.0);
   }
 
+  unarmedStrike() {
+    // TODO: code more of this here
+    // For now, we're cheating and relying on an existing macro
+    MT.exec(`<b>Unarmed Strike</b> <br />
+[macro("runUnarmedStrike@TOKEN"): 1]
+`)
+  }
+
   skillMod(skill: Skill): number {
     const abil = skillAbilityMos[skill];
     const abilMod = this.mod(abil)

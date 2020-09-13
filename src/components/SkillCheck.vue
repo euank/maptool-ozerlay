@@ -1,10 +1,10 @@
 <style scoped>
 .button {
   font-size: 0.8rem;
-  height: 2.5rem;
+  height: 2.6rem;
   line-height: 2.5rem;
   padding: 0 1.0rem;
-  margin: 0.25rem;
+  margin: 0 0.25rem;
 }
 </style>
 

@@ -15,3 +15,9 @@ export const Edit: Route = {
   path: '/edit',
   name: 'Edit',
 }
+
+export const Combat: Route = {
+  id: 2,
+  path: '/combat',
+  name: 'Combat',
+}

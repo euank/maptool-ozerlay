@@ -6,11 +6,15 @@
 .together {
 display: flex;
 }
+
+.h3size {
+  height: 5rem;
+}
 </style>
 
 <template>
   <div id="edit">
-    <h3>Oswald Struck</h3>
+    <h3 class="">Oswald Struck</h3>
     <form>
       <fieldset class="container">
         <div class="row">

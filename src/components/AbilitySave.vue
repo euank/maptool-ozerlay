@@ -1,6 +1,6 @@
 <template>
   <button v-on:click="runSave()">
-    {{ name }} save (+ {{ mod(value) }})
+    {{ this.ability }} save (+ {{ this.mod() }})
   </button>
 </template>
 

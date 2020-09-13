@@ -1,8 +1,8 @@
-import { escape } from 'lodash';
-
 import { MaptoolUtil as MT } from './maptool'
 
 type HitDie = 'd4' | 'd6' | 'd8' | 'd10' | 'd12'
+
+type Ability = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha' 
 
 type AbilityScores = {
   str: number
@@ -36,13 +36,17 @@ class Character {
     window.setData(JSON.stringify(this.data))
   }
 
-  doRoll(_rollObj: Roll) {
-    // TODO
-    MT.displayTooltip("1d20 + 4", "1d20 + Con");
+  mod(abil: Ability): number {
+    const val = this.data.abilityScores[abil]
+    return Math.floor((val - 10) / 2.0);
+  }
+
+  rollSave(abil: Ability) {
+    MT.displayTooltip(`1d20 + ${this.mod(abil)}`, `1d20 + ${abil}`)
   }
 }
 
 class Roll {
 }
 
-export { Character, Roll };
+export { Ability, Character, Roll };

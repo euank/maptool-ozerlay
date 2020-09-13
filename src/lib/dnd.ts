@@ -14,6 +14,8 @@ type AbilityScores = {
 }
 
 type CharacterData = {
+  version: number | undefined
+
   hp: number
   maxHP: number
 
@@ -30,6 +32,10 @@ type CharacterData = {
 
 class Character {
   constructor(readonly data: CharacterData) {
+  }
+
+  isUpToDate(): boolean {
+    return this.data.version !== undefined && this.data.version == 1 
   }
 
   save() {

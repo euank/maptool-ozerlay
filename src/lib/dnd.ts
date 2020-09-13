@@ -59,7 +59,6 @@ export class Character {
     if (this.data.saveProficiencies[abil]) {
       val += this.data.proficiencyBonus
     }
-    console.log(val)
     return val
   }
 

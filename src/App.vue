@@ -7,26 +7,4 @@
   </div>
 </template>
 
-<script>
-import FrameReload from "@/components/FrameReload";
-import Router from "@/components/Router";
-import Home from "@/components/Home";
-
-const routes = {
-  '/': Home,
-}
-
-export default {
-  name: "App",
-  data() {
-    return {
-      routes,
-      currentRoute: '/',
-    }
-  },
-  components: {
-    FrameReload,
-    Router,
-  }
-};
-</script>
+<script lang="ts" src="./App.ts" />

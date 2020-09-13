@@ -1,7 +1,15 @@
-import { Character} from './lib/dnd.js'
-const isWeb = typeof MapTool === 'undefined';
+import { Character} from './lib/dnd'
+const isWeb = typeof (window as any).MapTool === 'undefined';
 
-window.evalMT = function(typ, outputTarget, data) {
+declare global {
+    interface Window { 
+      evalMT(typ: string, target: string, data: string): void
+      setData(data: string): void
+    }
+}
+
+
+window.evalMT = function(typ: string, outputTarget: string, data: string) {
   if (isWeb) {
     console.log(`Macro: [${typ}: ${outputTarget}, ${JSON.stringify(data)}]`)
     return
@@ -25,12 +33,19 @@ window.evalMT = function(typ, outputTarget, data) {
   }
 }
 
-// TODO: vuex or some better state management
-const notes = JSON.parse(document.querySelector("#notes").innerHTML);
+
+const notesEl = document.querySelector("#notes")
+let notesHtml
+if (notesEl !== null) {
+  notesHtml = notesEl.innerHTML;
+}
+if (notesHtml === undefined) {
+  console.error('notes should not be undefined');
+  throw new Error('FATAL');
+}
+const notes = JSON.parse(notesHtml);
 
 const Oz = new Character(notes);
-
-window.data = notes;
 
 // write data back to notes
 window.setData = function(data) {

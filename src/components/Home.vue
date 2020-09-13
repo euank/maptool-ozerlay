@@ -12,17 +12,4 @@
   </div>
 </template>
 
-<script>
-import AbilitySave from "@/components/AbilitySave";
-
-export default {
-  computed: {
-    Oz() {
-      return this.$store.state.Oz
-    },
-  },
-  components: {
-    AbilitySave,
-  },
-}
-</script>
+<script lang="ts" src="./Home.ts"></script>

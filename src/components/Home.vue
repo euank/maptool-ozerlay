@@ -1,12 +1,12 @@
 <template>
   <!-- TODO: figure out the right way to plumb in this state, help, I am not good at vue yet -->
   <div id="char-metadata">
-    <span>HP: {{ $root.$data.hitPoints }} / {{ $root.$data.maxHitPoints }} </span>
+    <span>HP: {{ Oz.state.hitPoints }} / {{ Oz.state.maxHitPoints }} </span>
     <br />
-    <span>Ki: {{ $root.$data.ki }} / {{ $root.$data.maxKi }} </span>
+    <span>Ki: {{ Oz.state.ki }} / {{ Oz.state.maxKi }} </span>
     <br />
     <h3>Ability Saves</h3>
-    <div v-for="(value, name) in $root.$data.abilities">
+    <div v-for="(value, name) in Oz.state.abilities">
       <AbilitySave :name=name :value=value />
     </div>
   </div>
@@ -16,6 +16,11 @@
 import AbilitySave from "@/components/AbilitySave";
 
 export default {
+  computed: {
+    Oz() {
+      return this.$store.state.Oz
+    },
+  },
   components: {
     AbilitySave,
   },

@@ -1,4 +1,11 @@
+import { Character} from './lib/dnd.js'
+const isWeb = typeof MapTool === 'undefined';
+
 window.evalMT = function(typ, outputTarget, data) {
+  if (isWeb) {
+    console.log(`Macro: [${typ}: ${outputTarget}, ${JSON.stringify(data)}]`)
+    return
+  }
   try {
     const form = document.createElement('form');
     form.setAttribute('action', `macro://lib_eval@TOKEN/${outputTarget}/Impersonated?`);
@@ -19,9 +26,11 @@ window.evalMT = function(typ, outputTarget, data) {
 }
 
 // TODO: vuex or some better state management
-const data = JSON.parse(document.querySelector("#notes").innerHTML);
+const notes = JSON.parse(document.querySelector("#notes").innerHTML);
 
-window.data = data;
+const Oz = new Character(notes);
+
+window.data = notes;
 
 // write data back to notes
 window.setData = function(data) {
@@ -30,9 +39,21 @@ window.setData = function(data) {
 }
 
 import Vue from "vue";
+import Vuex from "vuex";
+
+Vue.use(Vuex);
 import App from "./App.vue";
 
+const store = new Vuex.Store({
+  state: {
+    Oz,
+  },
+  mutations: {
+  },
+});
+
+
 new Vue({
-  data: data,
+  store: store,
   render: h => h(App),
 }).$mount("#app");

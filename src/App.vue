@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h2>Oswald Struck</h2>
-    <Router v-bind:state="state" :routes="routes" v-bind:current-route="currentRoute" />
+    <Router :routes="routes" v-bind:current-route="currentRoute" />
     <br />
     <FrameReload />
   </div>
@@ -20,7 +20,6 @@ export default {
   name: "App",
   data() {
     return {
-      state: window.data,
       routes,
       currentRoute: '/',
     }

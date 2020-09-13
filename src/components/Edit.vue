@@ -19,21 +19,24 @@ display: flex;
       <fieldset class="container">
         <div class="row">
           <label>Level:
-            <input type="number" v-model="char.level">
+            <input type="number" v-model.number="char.level">
+          </label>
+          <label>Proficiency Bonus:
+            <input type="number" v-model.number="char.proficiencyBonus">
           </label>
           <label>HP:
-            <input type="number" v-model="char.hp">
+            <input type="number" v-model.number="char.hp">
           </label>
           <label>MaxHP:
-            <input type="number" v-model="char.maxHP">
+            <input type="number" v-model.number="char.maxHP">
           </label>
         </div>
         <div class="row">
           <label>Ki:
-            <input type="number" v-model="char.ki">
+            <input type="number" v-model.number="char.ki">
           </label>
           <label>MaxKi:
-            <input type="number" v-model="char.maxKi">
+            <input type="number" v-model.number="char.maxKi">
           </label>
         </div>
         <hr />
@@ -41,7 +44,8 @@ display: flex;
         <div class="row flex-overflow">
           <div v-for="abil in Object.keys(char.abilityScores)">
             <label>{{ abil }}:
-              <input type="number" v-model="char.abilityScores[abil]">
+              <input type="checkbox" v-model="char.saveProficiencies[abil]">
+              <input type="number" v-model.number="char.abilityScores[abil]">
             </label>
           </div>
         </div>
@@ -52,7 +56,7 @@ display: flex;
             <label>{{ skill }}:
               <div class="together">
                 <input type="checkbox" v-model="char.skills[skill].trained">
-                <input type="number" v-model="char.skills[skill].points">
+                <input type="number" v-model.number="char.skills[skill].points">
               </div>
             </label>
           </div>

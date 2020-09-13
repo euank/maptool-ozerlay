@@ -15,6 +15,8 @@ type CharacterData = {
 
   abilityScores: AbilityScores
 
+  saveProficiencies: {[k in Ability]: boolean},
+
   level: number
   proficiencyBonus: number
 
@@ -25,6 +27,7 @@ export class Character {
   constructor(public data: CharacterData) {
     data.skills = data.skills || defaultSkillls
     data.abilityScores = data.abilityScores || defaultAbilityScores
+    data.saveProficiencies = data.saveProficiencies || defaultSaveProficencies
   }
 
   save() {
@@ -51,10 +54,27 @@ export class Character {
     return abilMod + plus.points
   }
 
+  abilSaveMod(abil: Ability): number {
+    let val = this.mod(abil)
+    if (this.data.saveProficiencies[abil]) {
+      val += this.data.proficiencyBonus
+    }
+    console.log(val)
+    return val
+  }
+
   rollSave(abil: Ability) {
+    let roll = `1d20 + ${this.mod(abil)}`
+    let tooltip = `1d20 + ${abil}`
+    let profBonus = 0
+    if (this.data.saveProficiencies[abil]) {
+      profBonus = this.data.proficiencyBonus
+      roll += ` + ${profBonus}`
+      tooltip += ` + proficiencyBonus`
+    }
     MT.exec(
       new ExpressionBuilder(`Oz rolls their <b>${Character.prettyAbilityName(abil)}</b> save: <br />`)
-        .withTooltip(`1d20 + ${this.mod(abil)}`, `1d20 + ${abil}`)
+        .withTooltip(roll, tooltip)
         .build()
     )
   }
@@ -164,4 +184,13 @@ const defaultAbilityScores: AbilityScores = {
   int: 0,
   wis: 0,
   cha: 0,
+}
+
+const defaultSaveProficencies = {
+  str: false,
+  dex: false,
+  con: false,
+  int: false,
+  wis: false,
+  cha: false,
 }

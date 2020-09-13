@@ -10,7 +10,7 @@ export default Vue.extend({
   },
   methods: {
     mod() {
-      return this.Oz.mod(this.ability)
+      return this.Oz.abilSaveMod(this.ability)
     },
     runSave() {
       this.Oz.rollSave(this.ability);

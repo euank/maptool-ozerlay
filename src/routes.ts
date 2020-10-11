@@ -21,3 +21,11 @@ export const Combat: Route = {
   path: '/combat',
   name: 'Combat',
 }
+
+export const Attacks = {
+  FlurryOfBlows: {
+    id: 3,
+    path: '/combat/flurry-of-blows',
+    name: 'FlurryOfBlows',
+  }
+}

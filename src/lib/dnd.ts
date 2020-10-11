@@ -45,8 +45,21 @@ export class Character {
   setCombatAdvantage(to: 'advantage' | 'disadvantage' | '') {
     this.data.combatAdvantage = to
   }
+  private sharedHandsOfHealing(b: ExpressionBuilder): ExpressionBuilder {
+    const verbs = [
+      'slap',
+      'love-tap',
+      'punch',
+      'hit',
+      'touch',
+    ];
+    const verb = verbs[Math.floor(Math.random() * verbs.length)];
+    b = b.withText(`As an action, you ${verb} a creature and restore `)
+    return b.withTooltip(`${this.data.martialArtDie} + ${this.mod('wis')}`, `${this.data.martialArtDie} + Wis`)
+      .withText(' hit points.')
+  }
 
-  sharedUnarmedStrike(b: ExpressionBuilder): ExpressionBuilder {
+  private sharedUnarmedStrike(b: ExpressionBuilder): ExpressionBuilder {
     let tooltip = '1d20'
     let maybeAdvantageBlurb = '';
 
@@ -111,6 +124,24 @@ export class Character {
     maptoolCode = this.sharedUnarmedStrike(maptoolCode);
     MT.exec(maptoolCode.build());
   }
+
+  flurryOfBlows(secondAttack: 'unarmedStrike' | 'handsOfHealing') {
+    let maptoolCode = new ExpressionBuilder()
+      .withText(`<b>Flurry of Blows</b><br />`)
+    maptoolCode = this.sharedUnarmedStrike(maptoolCode);
+    switch (secondAttack) {
+      case 'unarmedStrike':
+        maptoolCode = maptoolCode.withText('<br /><i>Second attack - Unarmed Strike</i><br />')
+        maptoolCode = this.sharedUnarmedStrike(maptoolCode);
+        break;
+      case 'handsOfHealing':
+        maptoolCode = maptoolCode.withText('<br /><i>Second attack - Hands of Healing</i><br />')
+        maptoolCode = this.sharedHandsOfHealing(maptoolCode);
+        break;
+    }
+    MT.exec(maptoolCode.build())
+  }
+
 
   critMessage(): string {
     const messages = [

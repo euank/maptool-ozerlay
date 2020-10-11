@@ -15,7 +15,9 @@
     </label>
     <br />
     <a href="#" class="button" @click="unarmedStrike()">Unarmed Strike</a>
-    <p>TODO: add a bunch more stuff</p>
+    <br />
+    <a href="#" class="button" @click="flurryOfBlows()">Flurry of Blows</a>
+    <p>TODO: add a bunch more stuff</p>;
   </div>
 </template>
 

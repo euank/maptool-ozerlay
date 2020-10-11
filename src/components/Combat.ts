@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import { Attacks } from '@/routes'
+
 export default Vue.extend({
   computed: {
     char() {
@@ -27,6 +29,9 @@ export default Vue.extend({
   methods: {
     unarmedStrike() {
       this.$store.state.Oz.unarmedStrike()
+    },
+    flurryOfBlows() {
+      this.$store.commit('routeTo', Attacks.FlurryOfBlows)
     },
   },
 });

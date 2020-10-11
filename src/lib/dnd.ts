@@ -21,6 +21,9 @@ type CharacterData = {
   proficiencyBonus: number
 
   skills: Skills,
+
+  combatAdvantage: 'advantage' | 'disadvantage' | ''
+  martialArtDie: string,
 }
 
 export class Character {
@@ -39,12 +42,83 @@ export class Character {
     return Math.floor((val - 10) / 2.0);
   }
 
-  unarmedStrike() {
-    // TODO: code more of this here
-    // For now, we're cheating and relying on an existing macro
-    MT.exec(`<b>Unarmed Strike</b> <br />
-[macro("runUnarmedStrike@TOKEN"): 1]
+  setCombatAdvantage(to: 'advantage' | 'disadvantage' | '') {
+    this.data.combatAdvantage = to
+  }
+
+  sharedUnarmedStrike(b: ExpressionBuilder): ExpressionBuilder {
+    let tooltip = '1d20'
+    let maybeAdvantageBlurb = '';
+
+    switch (this.data.combatAdvantage) {
+      case 'advantage':
+        b.withText(`[h: roll=1d20]
+[h: roll2=1d20]
+[h,if(roll2 > roll),code:{
+  [h: roll=roll2]
+};{}]
 `)
+        tooltip = 'max(1d20,1d20)'
+        maybeAdvantageBlurb = 'with advantage '
+        break;
+      case 'disadvantage':
+        b.withText(`[h: roll=1d20]
+[h: roll2=1d20]
+[h,if(roll2 < roll),code:{
+  [h: roll=roll2]
+};{}]
+`)
+        tooltip = 'min(1d20,1d20)'
+        maybeAdvantageBlurb = 'with disadvantage '
+        break;
+      default:
+        b.withText(`[h: roll=1d20]`)
+        break;
+    }
+    b.withText(`
+[r,if(roll == 20): "${this.critMessage()} <br />"]
+`)
+
+    b.withText(`
+[h: toHit=roll + ${this.mod('dex')} + ${this.data.proficiencyBonus}]
+[h: target=getSelected()]
+[h: args=json.set("", "ToHit", toHit, "Target", target)]
+[macro("HitCheck@Lib:Stuff"): args]
+[h: hit=macro.return]
+[macro("GetNameTarget@Lib:Stuff"): target]
+[h: targetName=macro.return]`)
+    tooltip += ' + Dex + Proficiency'
+
+    b.withText(`Oz attacks the [r: targetName] ${maybeAdvantageBlurb}with an unarmed strike: `);
+    b.withTooltip('toHit', tooltip);
+    b.withText(`<br />
+[r,if(hit || roll == 20),code:{
+  [r: "And hits for "]
+`)
+    b.withTooltip(`${this.data.martialArtDie} + ${this.mod('dex')}`, `${this.data.martialArtDie} + Dex`)
+    b.withText(`
+    [r: " Damage"]
+};{
+  But misses
+}]`)
+
+    return b
+  }
+
+  unarmedStrike() {
+    let maptoolCode = new ExpressionBuilder()
+      .withText(`<b>Unarmed Strike</b><br />`);
+    maptoolCode = this.sharedUnarmedStrike(maptoolCode);
+    MT.exec(maptoolCode.build());
+  }
+
+  critMessage(): string {
+    const messages = [
+      'Critical Strike!',
+      'Nat 20!',
+      "That's a Crit!"
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
   }
 
   skillMod(skill: Skill): number {

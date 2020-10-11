@@ -32,6 +32,11 @@ display: flex;
           </label>
         </div>
         <div class="row">
+          <label>Martial arts die:
+            <input v-model="char.martialArtDie">
+          </label>
+        </div>
+        <div class="row">
           <label>Ki:
             <input type="number" v-model.number="char.ki">
           </label>
